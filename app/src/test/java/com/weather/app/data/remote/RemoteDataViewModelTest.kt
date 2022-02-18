@@ -3,13 +3,13 @@ package com.weather.app.data.remote
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.weather.app.BuildConfig
-import com.weather.app.data.remote.model.Article
-import com.weather.app.data.remote.model.Medium
-import com.weather.app.utils.TestCoroutineRule
-import com.weather.app.data.remote.model.ResponseArticles
+import com.weather.app.data.remote.model.other.Article
+import com.weather.app.data.remote.model.other.Medium
+import com.weather.app.data.remote.model.other.ResponseArticles
 import com.weather.app.data.repository.MainRepository
 import com.weather.app.ui.home.HomeViewModel
 import com.weather.app.utils.Resource
+import com.weather.app.utils.TestCoroutineRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.*
 import org.junit.Assert.assertEquals

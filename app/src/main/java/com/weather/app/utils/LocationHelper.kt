@@ -19,28 +19,31 @@ import com.karumi.dexter.listener.DexterError
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 
-class LocationHelper(
+class LocationHelper constructor(
     private val activity: Activity,
+    private val listener: OnSuccessListener<Location>? = null,
     private val numOfUpdates: Int = 1,
-    private val interval: Long = 10000L,
-    private val fastestInterval: Long = 7000L,
+    private val interval: Long = 1L,
+    private val fastestInterval: Long = 1L,
     private val priority: Int = LocationRequest.PRIORITY_HIGH_ACCURACY,
     private val dialogTitle: String? = "Location Permission",
     private val dialogMessage: String? = "Please allow location permission",
-    private var listener: OnSuccessListener<Location?>? = null,
 ) {
     private var locationCallback: LocationCallback?
     var fusedLocationClient: FusedLocationProviderClient
-    private var location: Location? = null
-    var isRunning = false
-        private set
+    private lateinit var location: Location
+    private var isRunning = false
+    private var isCallback = false
 
     init {
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
                 super.onLocationResult(locationResult)
                 location = locationResult.lastLocation
-                listener!!.onSuccess(location)
+                if (!isCallback) {
+                    listener!!.onSuccess(location)
+                    isCallback = true
+                }
             }
         }
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity)
@@ -59,8 +62,8 @@ class LocationHelper(
     }
 
     fun stop() {
-        if (locationCallback != null) fusedLocationClient.removeLocationUpdates(locationCallback!!)
-        listener = null
+        if (locationCallback != null)
+            fusedLocationClient.removeLocationUpdates(locationCallback!!)
         locationCallback = null
         isRunning = false
     }
@@ -79,7 +82,7 @@ class LocationHelper(
         object : MultiplePermissionsListener {
             override fun onPermissionsChecked(multiplePermissionsReport: MultiplePermissionsReport) {
                 if (multiplePermissionsReport.areAllPermissionsGranted()) {
-                    showEnableLocationSetting()
+                    //showEnableLocationSetting()
 
                     // Location permission check
                     if (ActivityCompat.checkSelfPermission(activity,
@@ -98,11 +101,11 @@ class LocationHelper(
                                 }
 
                                 // Checking if location received is not null then will be passed
-                                if (location != null) {
+                                /*if (location != null) {
                                     this@LocationHelper.location = location
                                     if (listener != null) listener!!.onSuccess(location)
                                     //return;
-                                }
+                                }*/
 
                                 // if the location is null starting location request for one time to
                                 // fetch one location update and will pass the location when fetched
@@ -122,6 +125,8 @@ class LocationHelper(
                                 fusedLocationClient.requestLocationUpdates(mLocationRequest!!,
                                     locationCallback!!, Looper.myLooper()!!)
                             })
+                } else {
+                    showEnableLocationSetting()
                 }
             }
 

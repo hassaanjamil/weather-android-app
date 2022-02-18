@@ -4,9 +4,6 @@ import com.weather.app.BuildConfig
 import com.weather.app.data.remote.ApiHelper
 import com.weather.app.data.remote.ApiHelperImpl
 import com.weather.app.data.remote.ApiService
-import com.weather.app.data.repository.MainRepository
-import com.weather.app.ui.home.HomeAdapter
-import com.weather.app.ui.home.HomeViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

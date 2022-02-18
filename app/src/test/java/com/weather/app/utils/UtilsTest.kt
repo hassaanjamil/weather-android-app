@@ -1,10 +1,9 @@
 package com.weather.app.utils
 
 import com.weather.app.BuildConfig
-import com.weather.app.data.remote.model.Article
-import org.junit.Test
-
+import com.weather.app.data.remote.model.other.Article
 import org.junit.Assert.*
+import org.junit.Test
 
 /**
  * Example local unit test, which will execute on the development machine (host).
