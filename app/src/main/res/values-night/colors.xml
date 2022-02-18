@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primaryColor">#4db6ac</color>
+    <color name="primaryDarkColor">#00867d</color>
+    <color name="secondaryColor">#f57f17</color>
+    <color name="secondaryDarkColor">#bc5100</color>
+
+
+
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+
+
+    <color name="statusBarColor">#004d40</color>
+</resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primaryColor">#6200EE</color>
+    <color name="PrimaryLightColor">#7E57C2</color>
+    <color name="primaryDarkColor">#3700B3</color>
+    <color name="secondaryColor">#e65100</color>
+    <color name="secondaryLightColor">#ff833a</color>
+    <color name="secondaryDarkColor">#ac1900</color>
+    <color name="primaryTextColor">#ffffff</color>
+    <color name="secondaryTextColor">#000000</color>
+
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+
+    <color name="statusBarColor">#4527A0</color>
+    <color name="l_grey">#ECECEC</color>
+    <color name="d_grey">#686868</color>
+
+    <color name="titleTextColor">#282828</color>
+    <color name="subtitleTextColor">#888888</color>
+
+
+</resources>
