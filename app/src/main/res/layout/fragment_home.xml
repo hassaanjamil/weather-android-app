@@ -95,13 +95,11 @@
                     app:layout_constraintStart_toStartOf="parent"
                     tools:text="Wind Speed: 19 km/h" />
 
-                <de.hdodenhof.circleimageview.CircleImageView
+                <ImageView
                     android:id="@+id/ivIcon"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:src="@mipmap/ic_launcher_foreground"
-                    app:civ_border_color="@color/l_grey"
-                    app:civ_border_width="2dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

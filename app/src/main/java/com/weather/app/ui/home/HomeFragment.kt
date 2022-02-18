@@ -12,6 +12,7 @@ import com.weather.app.data.remote.model.weather.ResponseWeather
 import com.weather.app.databinding.FragmentHomeBinding
 import com.weather.app.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.Math.round
 import java.util.*
 import javax.inject.Inject
 
@@ -149,17 +150,18 @@ class HomeFragment : Fragment() {
 
     private fun renderUI(response: ResponseWeather?) {
         response?.let { it1 ->
+            binding.tvLocationName.text = "${it1.name}, ${it1.sys?.country}"
             binding.tvDate.text = Date().toDateFormat("MMMM dd, yyyy")
             binding.tvTime.text = Date().toTimeFormat("hh:mm aa")
             binding.tvWindDirect.text = "Wind: ${it1.wind?.deg?.toDouble()?.formatBearing()}"
             binding.tvWindSpeed.text = "Speed: ${it1.wind?.speed} m/s"
-            binding.tvTemp.text = "${it1.main?.temp}º C"
+            binding.tvTemp.text = "${it1.main?.temp?.let { round(it) }}º C"
             binding.tvDesc.text = "${it1.weather?.get(0)?.description}"
             binding.tvMaxTemp.text = "${it1.main?.temp_max}º C"
             binding.tvMinTemp.text = "${it1.main?.temp_min}º C"
             activity?.let {
                 Glide.with(it)
-                    .load("https://openweathermap.org/img/wn/${it1.weather?.get(0)?.icon}@2x.png")
+                    .load("https://openweathermap.org/img/wn/${it1.weather?.get(0)?.icon}@4x.png")
                     .into(binding.ivIcon)
             }
         }
