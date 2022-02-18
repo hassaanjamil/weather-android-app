@@ -6,16 +6,13 @@ import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.weather.app.R
-import com.weather.app.data.remote.model.other.ResponseArticles
 import com.weather.app.data.remote.model.weather.ResponseWeather
 import com.weather.app.databinding.FragmentHomeBinding
-import com.weather.app.utils.LocationHelper
-import com.weather.app.utils.Resource
-import com.weather.app.utils.Status
+import com.weather.app.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -68,19 +65,19 @@ class HomeFragment : Fragment() {
         locationHelper.stop()
     }
 
-    private fun renderList(response: ResponseArticles) {
+    /*private fun renderList(response: Response) {
         _binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-            /*addItemDecoration(
+            *//*addItemDecoration(
                 DividerItemDecoration(
                     _binding.recyclerView.context,
                     (_binding.recyclerView.layoutManager as LinearLayoutManager).orientation
                 )
-            )*/
+            )*//*
             homeAdapter.updateData(response)
             this.adapter = homeAdapter
         }
-    }
+    }*/
 
     private fun setupObserver() {
         /*homeViewModel.getMostPopularArticles().observe(it) {
@@ -105,19 +102,22 @@ class HomeFragment : Fragment() {
         homeViewModel.getCurrentLocation().observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
-                    _binding.progressBar.visibility = View.GONE
+                    //_binding.clProgressContainer.visibility = View.GONE
+                    //_binding.progressBar.visibility = View.GONE
                     Log.d("LOCATION", "Received")
                     it.data?.let { it1 ->
                         homeViewModel.fetchCurrentWeather(it1.latitude,
                             it1.longitude)
                     }
-                    _binding.recyclerView.visibility = View.VISIBLE
+                    //_binding.recyclerView.visibility = View.VISIBLE
                 }
                 Status.LOADING -> {
+                    _binding.clProgressContainer.visibility = View.VISIBLE
                     _binding.progressBar.visibility = View.VISIBLE
                     _binding.recyclerView.visibility = View.GONE
                 }
                 Status.ERROR -> {
+                    _binding.clProgressContainer.visibility = View.GONE
                     _binding.progressBar.visibility = View.GONE
                     Log.e("ERROR", it.message!!)
                 }
@@ -127,16 +127,19 @@ class HomeFragment : Fragment() {
         homeViewModel.getCurrentWeather().observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
+                    _binding.clProgressContainer.visibility = View.GONE
                     _binding.progressBar.visibility = View.GONE
                     renderUI(it.data)
                     homeViewModel.getCurrentWeather().removeObservers(this)
                     _binding.recyclerView.visibility = View.VISIBLE
                 }
                 Status.LOADING -> {
+                    _binding.clProgressContainer.visibility = View.VISIBLE
                     _binding.progressBar.visibility = View.VISIBLE
                     _binding.recyclerView.visibility = View.GONE
                 }
                 Status.ERROR -> {
+                    _binding.clProgressContainer.visibility = View.GONE
                     _binding.progressBar.visibility = View.GONE
                     Log.e("ERROR", it.message!!)
                 }
@@ -145,10 +148,20 @@ class HomeFragment : Fragment() {
     }
 
     private fun renderUI(response: ResponseWeather?) {
-        response?.main?.temp.let { it1 ->
-            Toast.makeText(activity,
-                it1.toString(),
-                Toast.LENGTH_SHORT).show()
+        response?.let { it1 ->
+            binding.tvDate.text = Date().toDateFormat("MMMM dd, yyyy")
+            binding.tvTime.text = Date().toTimeFormat("hh:mm aa")
+            binding.tvWindDirect.text = "Wind: ${it1.wind?.deg?.toDouble()?.formatBearing()}"
+            binding.tvWindSpeed.text = "Speed: ${it1.wind?.speed} m/s"
+            binding.tvTemp.text = "${it1.main?.temp}º C"
+            binding.tvDesc.text = "${it1.weather?.get(0)?.description}"
+            binding.tvMaxTemp.text = "${it1.main?.temp_max}º C"
+            binding.tvMinTemp.text = "${it1.main?.temp_min}º C"
+            activity?.let {
+                Glide.with(it)
+                    .load("https://openweathermap.org/img/wn/${it1.weather?.get(0)?.icon}@2x.png")
+                    .into(binding.ivIcon)
+            }
         }
     }
 

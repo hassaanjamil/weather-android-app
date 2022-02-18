@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.weather.app.data.remote.model.forecast.ResponseForecast
 import com.weather.app.data.remote.model.weather.ResponseWeather
 import com.weather.app.data.repository.MainRepository
 import com.weather.app.utils.Resource
@@ -15,25 +16,9 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val mainRepository: MainRepository) :
     ViewModel() {
-
-    //private val articles = MutableLiveData<Resource<ResponseArticles>>()
     private val responseCurrentWeather = MutableLiveData<Resource<ResponseWeather>>()
+    private val responseForecast = MutableLiveData<Resource<ResponseForecast>>()
     val location = MutableLiveData<Resource<Location>>()
-    /*init {
-        fetchMostPopularArticles()
-    }*/
-
-    /*private fun fetchMostPopularArticles() {
-        viewModelScope.launch {
-            articles.postValue(Resource.loading(null))
-            try {
-                val articlesFromApi = mainRepository.getMostPopularArticles()
-                articles.postValue(Resource.success(articlesFromApi))
-            } catch (e: Exception) {
-                articles.postValue(Resource.error(e.toString(), null))
-            }
-        }
-    }*/
 
     fun fetchCurrentWeather(
         lat: Double,
@@ -51,9 +36,22 @@ class HomeViewModel @Inject constructor(private val mainRepository: MainReposito
         }
     }
 
-    /*fun getMostPopularArticles(): LiveData<Resource<ResponseArticles>> {
-        return articles
-    }*/
+
+    fun fetchMonthlyForecast(
+        lat: Double,
+        lon: Double,
+        query: String = "dubai",
+    ) {
+        viewModelScope.launch {
+            this@HomeViewModel.responseForecast.postValue(Resource.loading(null))
+            try {
+                val response = mainRepository.getMonthlyForecast(lat, lon, query)
+                responseForecast.postValue(Resource.success(response))
+            } catch (e: Exception) {
+                responseForecast.postValue(Resource.error(e.toString(), null))
+            }
+        }
+    }
 
     fun getCurrentLocation(): LiveData<Resource<Location>> {
         return location
@@ -61,5 +59,9 @@ class HomeViewModel @Inject constructor(private val mainRepository: MainReposito
 
     fun getCurrentWeather(): LiveData<Resource<ResponseWeather>> {
         return responseCurrentWeather
+    }
+
+    fun getMonthlyForecast(): LiveData<Resource<ResponseForecast>> {
+        return responseForecast
     }
 }
