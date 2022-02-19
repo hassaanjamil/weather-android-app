@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.weather.app.data.remote.model.cities.Data
+import com.weather.app.data.local.entity.Data
 import com.weather.app.data.remote.model.cities.ResponseCities
 import com.weather.app.data.repository.MainRepository
 import com.weather.app.utils.Resource

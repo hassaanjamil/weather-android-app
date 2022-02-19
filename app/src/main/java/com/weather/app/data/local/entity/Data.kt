@@ -1,4 +1,4 @@
-package com.weather.app.data.remote.model.cities
+package com.weather.app.data.local.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

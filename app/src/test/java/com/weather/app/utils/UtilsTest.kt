@@ -1,7 +1,7 @@
 package com.weather.app.utils
 
 import com.weather.app.BuildConfig
-import com.weather.app.data.remote.model.cities.Data
+import com.weather.app.data.local.entity.Data
 import org.junit.Assert.*
 import org.junit.Test
 

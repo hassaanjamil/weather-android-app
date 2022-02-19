@@ -12,7 +12,7 @@ import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.weather.app.BuildConfig
-import com.weather.app.data.remote.model.cities.Data
+import com.weather.app.data.local.entity.Data
 import com.weather.app.data.remote.model.weather.ResponseWeather
 import com.weather.app.databinding.FragmentDetailBinding
 import com.weather.app.ui.search.CitiesAdapter

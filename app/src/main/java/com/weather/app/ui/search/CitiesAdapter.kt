@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.weather.app.R
-import com.weather.app.data.remote.model.cities.Data
+import com.weather.app.data.local.entity.Data
 import com.weather.app.databinding.ItemSearchCityBinding
 import com.weather.app.utils.toDateFormat
 import java.util.*

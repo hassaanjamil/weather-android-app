@@ -1,6 +1,6 @@
 package com.weather.app.data.local
 
-import com.weather.app.data.remote.model.cities.Data
+import com.weather.app.data.local.entity.Data
 
 class DatabaseHelperImpl(private val appDatabase: AppDatabase) : DatabaseHelper {
     override suspend fun getCities(): List<Data> = appDatabase.cityDao().getAll()

@@ -3,7 +3,6 @@ package com.weather.app.ui.main
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -48,7 +47,6 @@ class MainActivity : AppCompatActivity() {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == DEFAULTS.GPS_CODE) {
                 this@MainActivity.recreate()
-                Log.d("MainActivity", "onActivityResult: SUCCESS")
             } else {
                 GPSUtil(this).turnOnGPS()
             }

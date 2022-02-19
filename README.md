@@ -9,13 +9,14 @@ The sample is based on technology assessment requirement of a company, in which,
 - Dagger-hilt (for dependency injection)
 - Navigation Drawer component
 - Retrofit, Secrets Gradle Plugin
-- Unit test / Instrumented Test with converage (using Android Studio built-in feature)
+- Room Persistence Library (Jetpack Component)
+- Unit test / Instrumented Test with coverage (using built-in feature)
 
+> I have developed it using Android Studio Bumblebee (2021.1.1) and latest version of all the dependencies used in this project. You might need to have latest version of Android Studio to build this project.
 ## Setup
 
-Simply clone or download the zip project and open it to Android Studio IDE.
+Simply clone or download the zip project and open it to Android Studio IDE (latest version).
 
-I have developed it using Android Studio Bumblebee (2021.1.1)
 
 ## Project Structure
 
@@ -25,11 +26,14 @@ In this base package, there are:
 
 - **data package**
 
-  Data package holds the implementation/classes related to remote data. In which I have setup retrofit library to communicate with the Articles API.
+  Data package holds the data layer's implementation/classes related to remote/local data. In which
+  I have setup retrofit library for remote and Room Persistence Library for local data, to
+  communicate with the Weather + Cities API.
 
 - **di package** (Dependency Injection Package)
 
-  The package holds the Dagger Hilt Modules in which provides have been defined for retrofit and adapter dependencies which we needs to inject to our views.
+  The package holds the Dagger Hilt Modules in which provides have been defined for retrofit/room
+  and adapter dependencies which we needs to inject to our views.
 
 - **ui package**
 
@@ -37,21 +41,22 @@ In this base package, there are:
 
 - **utils package**
 
-  The package holds utility classes/models e.g. kotlin extensions, to support additional and reusable functions to our business logic.
+  The package holds utility classes/models e.g. kotlin extensions, to support additional and
+  reusable functions to our business logic.
 
-## Unit Tests and coverage
+## Unit Tests and Coverage
 
-I have wrote basic unit tests (exists in androidTest/test packages under src package/directory) which is convering stats below:
-Package: all classes
+I have wrote some basic unit test, and used Android Studio's built-in coverage feature to generate
+the report which you can also generate using the method mentioned below:
 
-| Classes %     | Methods %      | Lines %         |
-| ------------- | -------------- | --------------- |
-| 27.8% (10/36) | 33.3% (42/126) | 	38.8% (83/214) |
-
-I have used Android Studio's built-in coverage feature to generate the report which you can also generate using the method mentioned below:
-
-1. The very first thing you need to do is to run all the unit tests combine or at once for what you need to define a run configuration for it you can follow the guidelines mentioned [here](https://stackoverflow.com/a/69453681/3459944), You can also run a test file by right clicking it and run the tests, you will get results in console.
-2. After selecting the configuration you can hit the Android Studio option "Run with Converage", very right to Run and Debug options.
-3. After hitting it, all our unit test will be executed by gradle and will open in a Coverage pane in which you can see the stats of our report, you can also generate this report using "Generate converage report" option of this pane.
+1. The very first thing you need to do is to run all the unit tests combine or at once for what you
+   need to define a run configuration for it you can follow the guidelines
+   mentioned [here](https://stackoverflow.com/a/69453681/3459944), You can also run a test file by
+   right clicking it and run the tests, you will get results in console.
+2. After selecting the configuration you can hit the Android Studio option "Run with Converage",
+   very right to Run and Debug options.
+3. After hitting it, all our unit test will be executed by gradle and will open in a Coverage pane
+   in which you can see the stats of our report, you can also generate this report using "Generate
+   converage report" option of this pane.
 
 Good Luck!

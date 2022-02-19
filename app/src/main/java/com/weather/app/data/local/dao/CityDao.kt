@@ -1,7 +1,7 @@
 package com.weather.app.data.local.dao
 
 import androidx.room.*
-import com.weather.app.data.remote.model.cities.Data
+import com.weather.app.data.local.entity.Data
 
 @Dao
 interface CityDao {

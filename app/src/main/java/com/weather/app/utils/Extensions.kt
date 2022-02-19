@@ -34,7 +34,7 @@ fun Double.formatBearing(): String {
         "N")
     val cardinal = directions[floor((bearing + 11.25) % 360 / 22.5)
         .toInt()]
-    return "$cardinal ($bearing deg)"
+    return "$cardinal (${bearing}º)"
 }
 
 fun Long.convertUnixTimeMillisToDate(inFormat: String): String {

@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.weather.app.R
-import com.weather.app.data.remote.model.cities.Data
+import com.weather.app.data.local.entity.Data
 import com.weather.app.databinding.FragmentDashboardBinding
 import com.weather.app.ui.search.CitiesAdapter
 import com.weather.app.ui.search.ItemClickListener

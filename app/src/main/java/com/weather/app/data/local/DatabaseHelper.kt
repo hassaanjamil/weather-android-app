@@ -1,6 +1,6 @@
 package com.weather.app.data.local
 
-import com.weather.app.data.remote.model.cities.Data
+import com.weather.app.data.local.entity.Data
 
 interface DatabaseHelper {
 

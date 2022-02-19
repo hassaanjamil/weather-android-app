@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
@@ -18,7 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.weather.app.R
-import com.weather.app.data.remote.model.cities.Data
+import com.weather.app.data.local.entity.Data
 import com.weather.app.data.remote.model.cities.ResponseCities
 import com.weather.app.databinding.FragmentSearchBinding
 import com.weather.app.utils.Status
@@ -88,6 +89,8 @@ class SearchFragment : Fragment() {
         citiesAdapter.setFavoriteClickListener(object : ItemClickListener {
             override fun onItemClick(view: View, data: Data) {
                 val result = viewModel.insert(data)
+                val imageView = view as ImageView
+                imageView.setImageResource(R.drawable.ic_baseline_favorite)
                 Log.d("INSERT", result.toString())
             }
         })

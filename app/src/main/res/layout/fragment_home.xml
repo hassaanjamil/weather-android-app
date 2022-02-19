@@ -60,9 +60,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
-                    android:maxLines="1"
+                    android:maxLines="2"
                     android:textColor="@color/titleTextColor"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toStartOf="@+id/ivIcon"
                     app:layout_constraintStart_toStartOf="parent"
@@ -97,8 +97,8 @@
 
                 <ImageView
                     android:id="@+id/ivIcon"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:contentDescription="@string/weather_icon"
                     android:src="@mipmap/ic_launcher_foreground"
                     app:layout_constraintEnd_toEndOf="parent"

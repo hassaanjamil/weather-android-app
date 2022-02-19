@@ -1,8 +1,8 @@
 package com.weather.app.data.repository
 
 import com.weather.app.data.local.DatabaseHelper
+import com.weather.app.data.local.entity.Data
 import com.weather.app.data.remote.ApiHelper
-import com.weather.app.data.remote.model.cities.Data
 import com.weather.app.data.remote.model.cities.ResponseCities
 import com.weather.app.data.remote.model.forecast.ResponseForecast
 import com.weather.app.data.remote.model.weather.ResponseWeather
