@@ -23,11 +23,28 @@ android {
                 arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
             }
         }
+
+        flavorDimensions "version"
+        productFlavors {
+            development {
+                dimension "version"
+                versionNameSuffix ".dev"
+            }
+            production {
+                dimension "version"
+                versionNameSuffix ".prod"
+            }
+        }
     }
 
     buildTypes {
+        debug {
+            debuggable true
+        }
+
         release {
-            minifyEnabled false
+            debuggable false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
