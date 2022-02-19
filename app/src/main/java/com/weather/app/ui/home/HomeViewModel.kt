@@ -16,6 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val mainRepository: MainRepository) :
     ViewModel() {
+
     private val responseCurrentWeather = MutableLiveData<Resource<ResponseWeather>>()
     private val responseForecast = MutableLiveData<Resource<ResponseForecast>>()
     val location = MutableLiveData<Resource<Location>>()
@@ -26,27 +27,12 @@ class HomeViewModel @Inject constructor(private val mainRepository: MainReposito
         query: String = "dubai",
     ) {
         viewModelScope.launch {
-            this@HomeViewModel.responseCurrentWeather.postValue(Resource.loading(null))
-            try {
-                val response = mainRepository.getCurrentWeather(lat, lon, query)
-                responseCurrentWeather.postValue(Resource.success(response))
-            } catch (e: Exception) {
-                responseCurrentWeather.postValue(Resource.error(e.toString(), null))
-            }
-        }
-    }
-
-
-    fun fetchMonthlyForecast(
-        lat: Double,
-        lon: Double,
-        query: String = "dubai",
-    ) {
-        viewModelScope.launch {
             this@HomeViewModel.responseForecast.postValue(Resource.loading(null))
             try {
-                val response = mainRepository.getMonthlyForecast(lat, lon, query)
-                responseForecast.postValue(Resource.success(response))
+                val weather = mainRepository.getCurrentWeather(lat, lon, query)
+                responseCurrentWeather.postValue(Resource.success(weather))
+                val forecast = mainRepository.getMonthlyForecast(lat, lon, query)
+                responseForecast.postValue(Resource.success(forecast))
             } catch (e: Exception) {
                 responseForecast.postValue(Resource.error(e.toString(), null))
             }

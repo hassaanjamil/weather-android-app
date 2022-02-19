@@ -7,13 +7,6 @@ import retrofit2.http.Headers
 import retrofit2.http.Query
 
 interface ApiService {
-    /*@GET("{section}/{period}.json")
-    suspend fun getMostPopularArticles(
-        @Path("section") section: String,
-        @Path("period") period: String,
-        @Query("api-key") apiKey: String = BuildConfig.API_KEY,
-    ): ResponseArticles*/
-
     @Headers(value = [
         "X-RapidAPI-Host: community-open-weather-map.p.rapidapi.com",
         "X-RapidAPI-Key: c322118df6msh817a31335aa025dp14b8b2jsn017463c0fc26"
@@ -23,8 +16,8 @@ interface ApiService {
         @Query("lat") lat: Double,
         @Query("lon") lon: Double,
         @Query("q") query: String,
-        @Query("mode") mode: String = "json",
         @Query("units") units: String = "metric",
+        @Query("mode") mode: String = "json",
     ): ResponseWeather
 
     @Headers(value = [
@@ -36,7 +29,7 @@ interface ApiService {
         @Query("lat") lat: Double,
         @Query("lon") lon: Double,
         @Query("q") query: String,
-        @Query("mode") mode: String = "json",
         @Query("units") units: String = "metric",
+        @Query("mode") mode: String = "json",
     ): ResponseForecast
 }

@@ -36,3 +36,10 @@ fun Double.formatBearing(): String {
         .toInt()]
     return "$cardinal ($bearing deg)"
 }
+
+fun Long.convertUnixTimeMillisToDate(inFormat: String): String {
+    val sdf = SimpleDateFormat(inFormat, Locale.getDefault())
+    sdf.timeZone = TimeZone.getDefault()
+    val time: Long = this * 1000L
+    return sdf.format(Date(time))
+}

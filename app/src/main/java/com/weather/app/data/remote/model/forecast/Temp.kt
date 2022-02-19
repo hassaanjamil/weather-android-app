@@ -7,9 +7,9 @@ data class Temp(
     @SerializedName("average")
     val average: Double?,
     @SerializedName("average_max")
-    val averageMax: Double?,
+    val average_max: Double?,
     @SerializedName("average_min")
-    val averageMin: Double?,
+    val average_min: Double?,
     @SerializedName("record_max")
     val recordMax: Int?,
     @SerializedName("record_min")

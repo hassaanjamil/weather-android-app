@@ -48,6 +48,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:19.0.1'
     // Dexter Permissions Library
     implementation 'com.karumi:dexter:6.2.3'
+    //implementation 'de.hdodenhof:circleimageview:3.1.0'
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     def lifecycle = '2.4.1'
@@ -94,11 +95,6 @@ dependencies {
     def okhttp = '4.9.0'
     implementation "com.squareup.okhttp3:okhttp:$okhttp"
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttp"
-
-    implementation 'de.hdodenhof:circleimageview:3.1.0'
-
-    // Required -- JUnit 4 framework
-    testImplementation("junit:junit:4.13.2")
 
     // Testing
     testImplementation 'junit:junit:4.13.2'
