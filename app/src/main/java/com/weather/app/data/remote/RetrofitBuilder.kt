@@ -1,7 +1,7 @@
 package com.weather.app.data.remote
 
 import com.weather.app.BuildConfig
-import com.weather.app.BuildConfig.BASE_URL
+import com.weather.app.BuildConfig.BASE_URL_WEATHER
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -17,7 +17,7 @@ object RetrofitBuilder {
             httpBuilder.addInterceptor(logging)
         }
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(BASE_URL_WEATHER)
             .client(httpBuilder.build())
             .addConverterFactory(GsonConverterFactory.create())
             .build()

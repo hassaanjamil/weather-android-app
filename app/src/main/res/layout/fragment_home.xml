@@ -77,7 +77,6 @@
                     android:maxLines="1"
                     android:textColor="@color/titleTextColor"
                     android:textSize="14sp"
-                    app:layout_constraintTop_toBottomOf="@+id/tvLocationName"
                     app:layout_constraintBottom_toTopOf="@+id/tvWindSpeed"
                     app:layout_constraintEnd_toStartOf="@+id/ivIcon"
                     app:layout_constraintStart_toStartOf="parent"
@@ -224,7 +223,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <ProgressBar
             android:id="@+id/progressBar"

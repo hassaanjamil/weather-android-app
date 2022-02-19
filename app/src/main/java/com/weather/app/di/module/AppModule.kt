@@ -18,7 +18,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class AppModule {
     @Provides
-    fun provideBaseUrl() = BuildConfig.BASE_URL
+    fun provideBaseUrl() = BuildConfig.BASE_URL_WEATHER
 
     @Provides
     @Singleton

@@ -1,6 +1,6 @@
 package com.weather.app.di.module
 
-import com.weather.app.ui.home.HomeAdapter
+import com.weather.app.ui.search.SearchAdapter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -9,8 +9,8 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class HomeModule {
+class SearchModule {
     @Provides
     @Singleton
-    fun provideHomeAdapter(): HomeAdapter = HomeAdapter()
+    fun provideSearchAdapter(): SearchAdapter = SearchAdapter()
 }
