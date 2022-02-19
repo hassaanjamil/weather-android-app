@@ -8,12 +8,14 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.weather.app.data.remote.model.cities.Data
 import com.weather.app.data.remote.model.cities.ResponseCities
 import com.weather.app.databinding.FragmentSearchBinding
 import com.weather.app.utils.Status
@@ -24,7 +26,7 @@ import javax.inject.Inject
 class SearchFragment : Fragment() {
 
     @Inject
-    lateinit var searchAdapter: SearchAdapter
+    lateinit var citiesAdapter: CitiesAdapter
 
     private lateinit var viewModel: SearchViewModel
 
@@ -71,15 +73,29 @@ class SearchFragment : Fragment() {
 
             override fun onQueryTextChange(newText: String): Boolean {
                 Log.d("onQueryTextChange", newText)
-                requestCitiesData(newText)
+                if (newText.isEmpty()) {
+                    citiesAdapter.updateData(listOf(), false)
+                } else {
+                    requestCitiesData(newText)
+                }
                 return true
             }
         })
 
-        binding.searchView.setOnCloseListener {
-            binding.searchView.onActionViewCollapsed()
-            true
-        }
+        citiesAdapter.setFavoriteClickListener(object : ItemClickListener {
+            override fun onItemClick(view: View, data: Data) {
+                val result = viewModel.insert(data)
+                Log.d("INSERT", result.toString())
+            }
+        })
+
+        citiesAdapter.setItemClickListener(object : ItemClickListener {
+            override fun onItemClick(view: View, data: Data) {
+                Toast.makeText(activity,
+                    "${data.name} clicked",
+                    Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     fun requestCitiesData(query: String) {
@@ -94,10 +110,23 @@ class SearchFragment : Fragment() {
     }
 
     private fun setupObserver() {
-        viewModel.getCities().observe(viewLifecycleOwner) {
+        viewModel.getCitiesResponse().observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
                     it.data?.let { it1 -> renderList(it1) }
+                }
+                Status.LOADING -> {
+                }
+                Status.ERROR -> {
+                    Log.e("ERROR", it.message!!)
+                }
+            }
+        }
+
+        viewModel.getCityDb().observe(viewLifecycleOwner) {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    Toast.makeText(activity, "Inserted", Toast.LENGTH_SHORT).show()
                 }
                 Status.LOADING -> {
                 }
@@ -111,8 +140,8 @@ class SearchFragment : Fragment() {
     private fun renderList(response: ResponseCities) {
         _binding.rvCities.apply {
             layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-            searchAdapter.updateData(response)
-            this.adapter = searchAdapter
+            citiesAdapter.updateData(response.data ?: listOf(), false)
+            this.adapter = citiesAdapter
         }
     }
 

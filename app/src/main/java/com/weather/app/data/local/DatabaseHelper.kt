@@ -1,11 +1,13 @@
 package com.weather.app.data.local
 
-import com.weather.app.data.local.entity.User
+import com.weather.app.data.remote.model.cities.Data
 
 interface DatabaseHelper {
 
-    suspend fun getUsers(): List<User>
+    suspend fun getCities(): List<Data>
 
-    suspend fun insertAll(users: List<User>)
+    suspend fun insert(city: Data)
+
+    suspend fun delete(city: Data)
 
 }

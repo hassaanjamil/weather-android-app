@@ -94,7 +94,7 @@ class LocationHelper constructor(
                     }
                     fusedLocationClient.lastLocation
                         .addOnSuccessListener(activity,
-                            OnSuccessListener { location -> // Checking Location Provider is enabled
+                            OnSuccessListener {   // Checking Location Provider is enabled
                                 val locationManager =
                                     activity.getSystemService(Activity.LOCATION_SERVICE) as LocationManager
                                 if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -137,15 +137,15 @@ class LocationHelper constructor(
                 AlertDialog.Builder(activity)
                     .setTitle(dialogTitle)
                     .setMessage(dialogMessage)
-                    .setNegativeButton("Deny") { dialog: DialogInterface, which: Int ->
+                    .setNegativeButton("Deny") { dialog: DialogInterface, _: Int ->
                         dialog.dismiss()
                         permissionToken.cancelPermissionRequest()
                     }
-                    .setPositiveButton("Allow") { dialog: DialogInterface, which: Int ->
+                    .setPositiveButton("Allow") { dialog: DialogInterface, _: Int ->
                         dialog.dismiss()
                         permissionToken.continuePermissionRequest()
                     }
-                    .setOnDismissListener { dialog: DialogInterface? -> permissionToken.cancelPermissionRequest() }
+                    .setOnDismissListener { permissionToken.cancelPermissionRequest() }
                     .show()
             }
         }

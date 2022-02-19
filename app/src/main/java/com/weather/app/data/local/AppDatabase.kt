@@ -2,12 +2,10 @@ package com.weather.app.data.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.weather.app.data.local.dao.UserDao
-import com.weather.app.data.local.entity.User
+import com.weather.app.data.local.dao.CityDao
+import com.weather.app.data.remote.model.cities.Data
 
-@Database(entities = [User::class], version = 1)
+@Database(entities = [Data::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
-
-    abstract fun userDao(): UserDao
-
+    abstract fun cityDao(): CityDao
 }
