@@ -38,6 +38,7 @@ class HomeFragment : Fragment() {
     ): View {
         if (!::_binding.isInitialized) {
             _binding = FragmentHomeBinding.inflate(inflater, container, false)
+            setupView()
             setupObserver()
             fetchLocation()
         }
@@ -77,15 +78,26 @@ class HomeFragment : Fragment() {
         locationHelper.stop()
     }
 
+    private fun setupView() {
+        binding.ivArrowLeft.setOnClickListener {
+            if (layoutManager.findFirstVisibleItemPosition() > 0) {
+                binding.rvForecast.smoothScrollToPosition(layoutManager.findFirstVisibleItemPosition() - 1)
+            } else {
+                binding.rvForecast.smoothScrollToPosition(0)
+            }
+        }
+
+        binding.ivArrowRight.setOnClickListener {
+            binding.rvForecast.smoothScrollToPosition(layoutManager.findLastVisibleItemPosition() + 1)
+        }
+    }
+
+    private lateinit var layoutManager: LinearLayoutManager
     private fun renderList(response: ResponseForecast) {
         _binding.rvForecast.apply {
-            layoutManager = LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
-            /*addItemDecoration(
-                DividerItemDecoration(
-                    _binding.recyclerView.context,
-                    (_binding.recyclerView.layoutManager as LinearLayoutManager).orientation
-                )
-            )*/
+            this@HomeFragment.layoutManager =
+                LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
+            layoutManager = this@HomeFragment.layoutManager
             homeAdapter.updateData(response)
             this.adapter = homeAdapter
         }

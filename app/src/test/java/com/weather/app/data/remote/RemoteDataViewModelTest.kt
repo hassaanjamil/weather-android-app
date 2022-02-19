@@ -3,16 +3,18 @@ package com.weather.app.data.remote
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.weather.app.BuildConfig
-import com.weather.app.data.remote.model.other.Article
-import com.weather.app.data.remote.model.other.Medium
-import com.weather.app.data.remote.model.other.ResponseArticles
+import com.weather.app.data.local.DatabaseHelper
+import com.weather.app.data.remote.model.weather.ResponseWeather
 import com.weather.app.data.repository.MainRepository
 import com.weather.app.ui.home.HomeViewModel
 import com.weather.app.utils.Resource
 import com.weather.app.utils.TestCoroutineRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.junit.*
+import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
 import org.junit.rules.TestRule
 import org.junit.runner.RunWith
 import org.mockito.Mock
@@ -32,11 +34,16 @@ class RemoteDataViewModelTest {
     private lateinit var apiHelper: ApiHelper
 
     @Mock
-    private lateinit var apiUsersObserver: Observer<Resource<ResponseArticles>>
+    private lateinit var databaseHelper: DatabaseHelper
+
+    @Mock
+    private lateinit var apiUsersObserver: Observer<Resource<ResponseWeather>>
+
+    private lateinit var responseWeather: ResponseWeather
 
     @Before
     fun setUp() {
-        // Anything that can happen before test will be here
+        responseWeather = ResponseWeather()
     }
 
     @After
@@ -48,7 +55,7 @@ class RemoteDataViewModelTest {
      MODEL TEST
      */
 
-    @Test
+    /*@Test
     fun testBuild() {
 
         val model = Article("", "",1221L, 100L, "NY Times",
@@ -83,7 +90,7 @@ class RemoteDataViewModelTest {
         assertEquals(emptyList<String>(), model.perFacet)
         assertEquals(emptyList<String>(), model.geoFacet)
         assertEquals(emptyList<Medium>(), model.media)
-    }
+    }*/
 
     /*
     URL VALIDITY TESTs
@@ -91,17 +98,17 @@ class RemoteDataViewModelTest {
 
     @Test
     fun testRequestUrlValidation() {
-        if(BuildConfig.BASE_URL.contains("https")) {
-            Assert.assertEquals("https://", BuildConfig.BASE_URL.substring(0, 8))
+        if (BuildConfig.BASE_URL_WEATHER.contains("https")) {
+            assertEquals("https://", BuildConfig.BASE_URL_WEATHER.substring(0, 8))
         } else {
-            Assert.assertEquals("http://", BuildConfig.BASE_URL.substring(0, 8))
+            assertEquals("http://", BuildConfig.BASE_URL_WEATHER.substring(0, 8))
         }
     }
 
     @Test
     fun testRequestBaseUrlValidation() {
-        val baseUrl = BuildConfig.BASE_URL
-        Assert.assertEquals("https://api.nytimes.com/svc/mostpopular/v2/mostviewed/", baseUrl)
+        val baseUrl = BuildConfig.BASE_URL_WEATHER
+        assertEquals("https://community-open-weather-map.p.rapidapi.com/", baseUrl)
     }
 
     /*
@@ -109,36 +116,42 @@ class RemoteDataViewModelTest {
      */
 
     @Test
-    fun givenServerResponse200_whenFetchMostPopularArticles_shouldReturnSuccess() {
+    fun givenServerResponse200_whenFetchCurrentWeather_shouldReturnSuccess() {
+        val lat = 25.115261
+        val lon = 55.201827
+        val query = "dubai"
         testCoroutineRule.runBlockingTest {
-            Mockito.doReturn(ResponseArticles())
+            Mockito.doReturn(ResponseWeather())
                 .`when`(apiHelper)
-                .getMostPopularArticles()
-            val viewModel = HomeViewModel(MainRepository(apiHelper))
-            viewModel.getMostPopularArticles().observeForever(apiUsersObserver)
-            Mockito.verify(apiHelper).getMostPopularArticles()
-            Mockito.verify(apiUsersObserver).onChanged(Resource.success(ResponseArticles()))
-            viewModel.getMostPopularArticles().removeObserver(apiUsersObserver)
+                .getCurrentWeather(lat, lon, query)
+            val viewModel = HomeViewModel(MainRepository(apiHelper, databaseHelper))
+            viewModel.getCurrentWeather().observeForever(apiUsersObserver)
+            Mockito.verify(apiHelper).getCurrentWeather(lat, lon, query)
+            Mockito.verify(apiUsersObserver).onChanged(Resource.success(ResponseWeather()))
+            viewModel.getCurrentWeather().removeObserver(apiUsersObserver)
         }
     }
 
     @Test
     fun givenServerResponseError_whenFetch_shouldReturnError() {
+        val lat = 25.115261
+        val lon = 55.201827
+        val query = "dubai"
         testCoroutineRule.runBlockingTest {
             val errorMessage = "Error Message For You"
             Mockito.doThrow(RuntimeException(errorMessage))
                 .`when`(apiHelper)
-                .getMostPopularArticles()
-            val viewModel = HomeViewModel(MainRepository(apiHelper))
-            viewModel.getMostPopularArticles().observeForever(apiUsersObserver)
-            Mockito.verify(apiHelper).getMostPopularArticles()
+                .getCurrentWeather(lat, lon, query)
+            val viewModel = HomeViewModel(MainRepository(apiHelper, databaseHelper))
+            viewModel.getCurrentWeather().observeForever(apiUsersObserver)
+            Mockito.verify(apiHelper).getCurrentWeather(lat, lon, query)
             Mockito.verify(apiUsersObserver).onChanged(
                 Resource.error(
                     RuntimeException(errorMessage).toString(),
                     null
                 )
             )
-            viewModel.getMostPopularArticles().removeObserver(apiUsersObserver)
+            viewModel.getCurrentWeather().removeObserver(apiUsersObserver)
         }
     }
 

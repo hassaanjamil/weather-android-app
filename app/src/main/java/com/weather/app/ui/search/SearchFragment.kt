@@ -10,11 +10,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
+import com.weather.app.R
 import com.weather.app.data.remote.model.cities.Data
 import com.weather.app.data.remote.model.cities.ResponseCities
 import com.weather.app.databinding.FragmentSearchBinding
@@ -91,9 +94,9 @@ class SearchFragment : Fragment() {
 
         citiesAdapter.setItemClickListener(object : ItemClickListener {
             override fun onItemClick(view: View, data: Data) {
-                Toast.makeText(activity,
-                    "${data.name} clicked",
-                    Toast.LENGTH_SHORT).show()
+                val bundle = bundleOf("data" to Gson().toJson(data))
+                Navigation.findNavController(view)
+                    .navigate(R.id.action_navigation_search_to_navigation_detail, bundle)
             }
         })
     }

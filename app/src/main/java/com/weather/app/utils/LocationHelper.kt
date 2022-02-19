@@ -69,14 +69,14 @@ class LocationHelper constructor(
     }
 
     private var mLocationRequest: LocationRequest? = null
-    private var mLocationSettingsRequest: LocationSettingsRequest? = null
+    /*private var mLocationSettingsRequest: LocationSettingsRequest? = null
     private fun showEnableLocationSetting() {
         val builder = LocationSettingsRequest.Builder()
         builder.addLocationRequest(mLocationRequest!!)
         mLocationSettingsRequest = builder.build()
         val settingsClient = LocationServices.getSettingsClient(activity)
         settingsClient.checkLocationSettings(mLocationSettingsRequest!!)
-    }
+    }*/
 
     private val permissionsListener: MultiplePermissionsListener =
         object : MultiplePermissionsListener {
@@ -125,8 +125,6 @@ class LocationHelper constructor(
                                 fusedLocationClient.requestLocationUpdates(mLocationRequest!!,
                                     locationCallback!!, Looper.myLooper()!!)
                             })
-                } else {
-                    showEnableLocationSetting()
                 }
             }
 

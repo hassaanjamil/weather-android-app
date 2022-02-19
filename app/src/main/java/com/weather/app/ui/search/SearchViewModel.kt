@@ -23,7 +23,7 @@ class SearchViewModel @Inject constructor(private val mainRepository: MainReposi
         prefix: String,
     ) {
         viewModelScope.launch {
-            this@SearchViewModel.responseCities.postValue(Resource.loading(null))
+            responseCities.postValue(Resource.loading(null))
             try {
                 val weather = mainRepository.getCities(prefix)
                 responseCities.postValue(Resource.success(weather))

@@ -1,7 +1,7 @@
 package com.weather.app.utils
 
 import com.weather.app.BuildConfig
-import com.weather.app.data.remote.model.other.Article
+import com.weather.app.data.remote.model.cities.Data
 import org.junit.Assert.*
 import org.junit.Test
 
@@ -22,8 +22,9 @@ class UtilsTest {
         assertEquals(1, BuildConfig.VERSION_CODE)
         assertEquals(true, BuildConfig.DEBUG)
         assertEquals("1.0", BuildConfig.VERSION_NAME)
-        assertEquals("OQcEo9fdy3pn8YA5xt5Fow5RyU4bH3mE", BuildConfig.API_KEY)
-        assertEquals("https://api.nytimes.com/svc/mostpopular/v2/mostviewed/", BuildConfig.BASE_URL)
+        assertEquals("5e18463872mshb9da089921e0e15p10fe85jsn39fbf83f4351", BuildConfig.API_KEY)
+        assertEquals("https://community-open-weather-map.p.rapidapi.com/",
+            BuildConfig.BASE_URL_WEATHER)
     }
 
     /*
@@ -37,7 +38,7 @@ class UtilsTest {
 
     @Test
     fun testResource() {
-        assertNotNull(Resource.success(Article(title = "ABC")))
+        assertNotNull(Resource.success(Data(name = "ABC")))
         assertNull(Resource.error("Exception", null).data)
         assertNull(Resource.loading(null).message)
     }

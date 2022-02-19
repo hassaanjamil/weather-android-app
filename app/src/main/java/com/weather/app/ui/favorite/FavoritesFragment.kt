@@ -6,10 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
+import com.weather.app.R
 import com.weather.app.data.remote.model.cities.Data
 import com.weather.app.databinding.FragmentDashboardBinding
 import com.weather.app.ui.search.CitiesAdapter
@@ -48,15 +52,15 @@ class FavoritesFragment : Fragment() {
         citiesAdapter.setFavoriteClickListener(object : ItemClickListener {
             override fun onItemClick(view: View, data: Data) {
                 val result = viewModel.delete(data)
-                Log.d("INSERT", result.toString())
+                Log.d("DELETE", result.toString())
             }
         })
 
         citiesAdapter.setItemClickListener(object : ItemClickListener {
             override fun onItemClick(view: View, data: Data) {
-                Toast.makeText(activity,
-                    "${data.name} clicked",
-                    Toast.LENGTH_SHORT).show()
+                val bundle = bundleOf("data" to Gson().toJson(data))
+                Navigation.findNavController(view)
+                    .navigate(R.id.action_navigation_favorites_to_navigation_detail, bundle)
             }
         })
     }
@@ -83,7 +87,7 @@ class FavoritesFragment : Fragment() {
         viewModel.getCityDb().observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
-                    Toast.makeText(activity, "Delted", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, "Deleted", Toast.LENGTH_SHORT).show()
                     viewModel.fetchCities()
                 }
                 Status.LOADING -> {
