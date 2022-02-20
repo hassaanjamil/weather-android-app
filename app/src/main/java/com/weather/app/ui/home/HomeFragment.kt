@@ -112,7 +112,7 @@ class HomeFragment : Fragment() {
                     Log.d("LOCATION", "Received")
                     it.data?.let { it1 ->
                         homeViewModel.fetchCurrentWeather(it1.latitude,
-                            it1.longitude)
+                            it1.longitude, "")
                     }
                     //_binding.recyclerView.visibility = View.VISIBLE
                 }
